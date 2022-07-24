@@ -1,44 +1,78 @@
-
-import { useState, useEffect, createContext } from 'react'
-import axios from 'axios'
+import { useState, useEffect, createContext } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const QuioscoContext = createContext();
 
 const QuioscoProvider = ({ children }) => {
-    const [categorias, setCategorias] = useState([])
-    const [categoriaActual, setCategoriaActual] = useState({})
-    
-    useEffect(() => {
-        const obtenerCategorias = async() => {
-            const { data } = await axios('/api/categorias')
-            setCategorias(data)
-        }
+  const [categorias, setCategorias] = useState([]);
+  const [categoriaActual, setCategoriaActual] = useState({});
+  const [producto, setProducto] = useState({});
+  const [modal, setModal] = useState(false);
+  const [pedido, setPedido] = useState([]);
 
-        obtenerCategorias();
-    }, [])
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+      const { data } = await axios('/api/categorias');
+      setCategorias(data);
+    };
 
-    const handleClickCategoria = id => {
-        const categoria = categorias.filter(catg => catg.id == id)
-        setCategoriaActual(categoria[0]);
+    obtenerCategorias();
+  }, []);
+
+  useEffect(() => {
+    setCategoriaActual(categorias[0]);
+  }, [categorias]);
+
+  const handleClickCategoria = (id) => {
+    const categoria = categorias.filter((catg) => catg.id == id);
+    setCategoriaActual(categoria[0]);
+  };
+
+  const handleSetProducto = (producto) => {
+    setProducto(producto);
+  };
+
+  const handleChangeModal = () => {
+    setModal(!modal);
+  };
+
+  const handleAgregarPedido = ({ categoriaId, ...producto }) => {
+    //ya existe?
+    if (pedido.some((productoState) => productoState.id === producto.id)) {
+      //actualizar cantidad
+      const pedidoActualizado = pedido.map((productoState) =>
+        productoState.id === producto.id ? producto : productoState
+      );
+      setPedido(pedidoActualizado);
+      toast.success('Guardado correctamente');
+    } else {
+      setPedido([...pedido, producto]);
+      toast.success('Agreado al Pedido');
     }
 
+    setModal(false);
+  };
 
-    return(
-        <QuioscoContext.Provider
-            value={{
-                categorias,
-                categoriaActual,
-                handleClickCategoria
-            }}
-        >
-            {children}
-        </QuioscoContext.Provider>
-    )
-}
+  return (
+    <QuioscoContext.Provider
+      value={{
+        categorias,
+        categoriaActual,
+        handleClickCategoria,
+        producto,
+        handleSetProducto,
+        modal,
+        handleChangeModal,
+        handleAgregarPedido,
+        pedido,
+      }}
+    >
+      {children}
+    </QuioscoContext.Provider>
+  );
+};
 
+export { QuioscoProvider };
 
-export {
-    QuioscoProvider
-}
-  
-export default QuioscoContext
+export default QuioscoContext;
