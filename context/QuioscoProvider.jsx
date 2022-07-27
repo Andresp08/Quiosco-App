@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { SettingsOverscanOutlined } from '@mui/icons-material';
 
 const QuioscoContext = createContext();
 
@@ -10,6 +12,10 @@ const QuioscoProvider = ({ children }) => {
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
   const [pedido, setPedido] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [total, setTotal] = useState(0);
+
+  const router = useRouter();
 
   useEffect(() => {
     const obtenerCategorias = async () => {
@@ -24,9 +30,18 @@ const QuioscoProvider = ({ children }) => {
     setCategoriaActual(categorias[0]);
   }, [categorias]);
 
+  useEffect(() => {
+    const nuevoTotal = pedido.reduce(
+      (total, producto) => producto.precio * producto.cantidad + total,
+      0
+    );
+    setTotal(nuevoTotal);
+  }, [pedido]);
+
   const handleClickCategoria = (id) => {
     const categoria = categorias.filter((catg) => catg.id == id);
     setCategoriaActual(categoria[0]);
+    router.push('/');
   };
 
   const handleSetProducto = (producto) => {
@@ -54,6 +69,44 @@ const QuioscoProvider = ({ children }) => {
     setModal(false);
   };
 
+  const handleEditarCantidades = (id) => {
+    const productoActualizar = pedido.filter((producto) => producto.id === id);
+    setProducto(productoActualizar[0]);
+    setModal(!modal);
+  };
+
+  const handleEliminarProducto = (id) => {
+    const productoActualizado = pedido.filter((producto) => producto.id !== id);
+    setPedido(productoActualizado);
+    toast.error('Pedido Eliminado');
+  };
+
+  const colocarOrden = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/ordenes', {
+        pedido,
+        nombre,
+        total,
+        fecha: Date.now().toString(),
+      });
+
+      //Reset app
+      setCategoriaActual(categorias[0]);
+      setPedido([]);
+      setNombre('');
+      setTotal(0);
+
+      toast.success('Pedido realizado con exito');
+
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <QuioscoContext.Provider
       value={{
@@ -66,6 +119,12 @@ const QuioscoProvider = ({ children }) => {
         handleChangeModal,
         handleAgregarPedido,
         pedido,
+        handleEditarCantidades,
+        handleEliminarProducto,
+        nombre,
+        setNombre,
+        colocarOrden,
+        total,
       }}
     >
       {children}
