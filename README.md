@@ -2,7 +2,7 @@
 
 ## Welcome! 👋
 
-## This is a dinamic project using NextJs by Vercel, Tailwind Css, for user interface design, Prisma as Database service and more.
+## This is a dinamic project using NextJs by Vercel, Tailwind Css for user interface design, Prisma as Database service and more.
 
 ### This project contains: 
 
