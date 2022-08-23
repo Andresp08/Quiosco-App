@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Quiosco App
 
-## Getting Started
+## Welcome! 👋
 
-First, run the development server:
+## This is a dinamic project using NextJs by Vercel, Tailwind Css, for user interface design, Prisma as Database service and more.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### This project contains: 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+. Multiple Api Calls to Prisma Database  \
+. Responsive interface desing using Tailwind Css \
+⋅ Server-Side Rendering and Static Site Generation using NextJs \
+. Advance filtering data in real time for search your favorite food \
+⋅ Best practices and folder structure \
+⋅ Awesome interface components \
+⋅ Explore it
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+And many more.
+I hope you like it.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Main user interface
+![1](https://user-images.githubusercontent.com/45151760/186182780-216d69d6-2b9e-40ac-8376-6190698f459c.png)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### Modal for choose your favorite food
+![2](https://user-images.githubusercontent.com/45151760/186182941-c7efd0c0-fa24-4a1a-bcbf-7fb8087f2f77.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Review your oder
+![3](https://user-images.githubusercontent.com/45151760/186183081-3f9ec50e-c135-43e4-998a-3ab7e9531f2f.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Add your name and payment interface
+![4](https://user-images.githubusercontent.com/45151760/186183219-8ee4d39e-d76c-473c-867b-ee21e5553f49.png)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**I love to code!** 🚀
